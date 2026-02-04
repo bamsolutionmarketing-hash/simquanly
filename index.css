@@ -1,15 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 :root {
   --primary: #3370ff;
   --primary-hover: #1e56e3;
-  --bg-main: #f8fafc;
+  --bg-main: #f5f6f7;
   --card-bg: #ffffff;
-  --text-main: #1e293b;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
+  --text-main: #1f2329;
+  --text-muted: #646a73;
+  --border-color: #dee0e3;
+  --radius-xl: 8px;
+  --radius-2xl: 12px;
 }
 
 body {
@@ -19,7 +17,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Custom Scrollbar for modern look */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -30,50 +28,45 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #dee0e3;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #bbbfc4;
 }
 
-/* Glassmorphism & Modern Card Effects */
+/* Lark-like Card Effects */
 .glass-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: #ffffff;
+  border: 1px solid var(--border-color);
 }
 
 .modern-shadow {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-}
-
-.hover-lift {
-  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 2px 4px 0 rgba(31,35,41,0.06);
 }
 
 .hover-lift:hover {
-  transform: translateY(-2px);
+  border-color: var(--primary);
 }
 
 /* Form Styles */
 input, select, textarea {
-  transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
 }
 
 input:focus, select:focus, textarea:focus {
   background-color: #fff !important;
-  box-shadow: 0 0 0 4px rgba(51, 112, 255, 0.1) !important;
+  border-color: var(--primary) !important;
+  outline: none;
 }
 
-/* Animation Utilities */
+/* Remove all animations */
 .fade-in {
-  animation: fadeIn 0.4s ease-out forwards;
+  opacity: 1;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 1; }
+  to { opacity: 1; }
 }

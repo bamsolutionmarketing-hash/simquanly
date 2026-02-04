@@ -23,7 +23,7 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
   });
 
   const toggleExpand = (id: string) => {
-    setExpandedRows(prev => 
+    setExpandedRows(prev =>
       prev.includes(id) ? prev.filter(rowId => rowId !== id) : [...prev, id]
     );
   };
@@ -47,7 +47,7 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
     setFormData({ simTypeId: '', quantity: 0, totalImportPrice: 0, importDate: new Date().toISOString().split('T')[0] });
   };
 
-  const inputClass = "w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none placeholder-gray-400";
+  const inputClass = "w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 outline-none placeholder-gray-400";
 
   return (
     <div className="space-y-4">
@@ -58,7 +58,7 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
         </h2>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center gap-2 text-sm font-medium"
         >
           <Plus className="w-4 h-4" />
           Nhập Lô Mới
@@ -89,8 +89,8 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
               ) : (
                 inventoryStats.map((stat) => (
                   <React.Fragment key={stat.simTypeId}>
-                    <tr 
-                      className="hover:bg-gray-50 transition-colors cursor-pointer bg-white"
+                    <tr
+                      className="hover:bg-gray-50 cursor-pointer bg-white"
                       onClick={() => toggleExpand(stat.simTypeId)}
                     >
                       <td className="px-4 py-3 text-gray-400">
@@ -143,7 +143,7 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
                                       {formatCurrency(batch.quantity > 0 ? batch.totalImportPrice / batch.quantity : 0)}
                                     </td>
                                     <td className="px-3 py-2 text-center">
-                                      <button 
+                                      <button
                                         onClick={(e) => { e.stopPropagation(); onDeleteBatch(batch.id); }}
                                         className="text-gray-400 hover:text-red-500"
                                       >
@@ -168,7 +168,7 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 animate-in fade-in zoom-in duration-200">
+          <div className="bg-white rounded shadow-xl max-w-md w-full p-6">
             <h3 className="text-lg font-bold text-gray-800 mb-4">Nhập Lô Sim Mới</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -188,8 +188,8 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
                 ) : (
                   <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200 border-dashed">
                     <p className="text-sm text-gray-500 mb-2">Chưa có loại sim nào.</p>
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => { setIsModalOpen(false); onNavigateToProducts(); }}
                       className="text-blue-600 font-medium text-sm hover:underline"
                     >
@@ -198,7 +198,7 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
                   </div>
                 )}
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Ngày Nhập</label>
@@ -232,22 +232,22 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
                   onChange={(e) => setFormData({ ...formData, totalImportPrice: parseFormattedNumber(e.target.value) })}
                 />
                 <p className="text-xs text-gray-500 mt-1">
-                   Giá vốn/sim dự kiến: {formData.quantity > 0 ? formatCurrency(formData.totalImportPrice / formData.quantity) : '0 ₫'}
+                  Giá vốn/sim dự kiến: {formData.quantity > 0 ? formatCurrency(formData.totalImportPrice / formData.quantity) : '0 ₫'}
                 </p>
               </div>
-              
+
               <div className="flex gap-3 pt-4">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 font-medium"
+                  className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 font-medium"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
                   disabled={!formData.simTypeId}
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50"
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium disabled:opacity-50"
                 >
                   Lưu Kho
                 </button>

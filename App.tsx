@@ -194,83 +194,71 @@ function SimManager() {
   } as SimPackageWithStats));
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-900 flex flex-col">
-      {/* --- Top Header --- */}
-      <header className="h-16 bg-white border-b border-slate-200 sticky top-0 z-50 px-4 md:px-8 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
-            <Cpu className="text-white w-6 h-6" />
+    <div className="min-h-screen bg-[#f5f6f7] font-sans text-[#1f2329] flex flex-col">
+      {/* --- Top Header (Lark Style) --- */}
+      <header className="h-12 bg-white border-b border-[#dee0e3] sticky top-0 z-50 px-4 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-[#3370ff] rounded flex items-center justify-center">
+            <Cpu className="text-white w-5 h-5" />
           </div>
-          <div>
-            <h1 className="text-lg font-extrabold tracking-tight text-slate-800 uppercase">Quản Lý SIM</h1>
-            <div className="flex items-center gap-1.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Enterprise Edition</span>
-            </div>
-          </div>
+          <span className="text-base font-semibold text-[#1f2329]">Quản Lý SIM</span>
         </div>
 
-        <div className="hidden md:flex flex-1 max-w-md mx-8">
+        <div className="hidden md:flex flex-1 max-w-lg mx-12">
           <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8f959e]" />
             <input
               type="text"
-              placeholder="Tìm kiếm nhanh..."
-              className="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-100 transition-all outline-none"
+              placeholder="Tìm kiếm..."
+              className="w-full pl-9 pr-4 py-1.5 bg-[#f5f6f7] border-none rounded text-sm focus:bg-white focus:ring-1 focus:ring-[#3370ff] outline-none"
             />
           </div>
         </div>
 
-        <div className="flex items-center gap-3 md:gap-5">
-          <button className="relative p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all">
+        <div className="flex items-center gap-4">
+          <button className="p-1.5 text-[#646a73] hover:bg-[#eff0f1] rounded">
             <Bell className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
           </button>
 
-          <div className="h-8 w-[1px] bg-slate-200 mx-1"></div>
+          <div className="h-4 w-[1px] bg-[#dee0e3]"></div>
 
-          {/* Profile Dropdown */}
           <div className="relative">
             <button
               onClick={() => setIsProfileOpen(!isProfileOpen)}
-              className="flex items-center gap-2 p-1 pr-3 hover:bg-slate-50 rounded-2xl transition-all"
+              className="flex items-center gap-2 p-1 hover:bg-[#eff0f1] rounded"
             >
-              <div className="w-9 h-9 rounded-xl border-2 border-white shadow-sm overflow-hidden bg-blue-50">
+              <div className="w-7 h-7 rounded border border-[#dee0e3] overflow-hidden bg-[#f5f6f7]">
                 <img src={userProfile?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`} alt="Profile" className="w-full h-full object-cover" />
               </div>
-              <div className="hidden sm:block text-left">
-                <p className="text-xs font-bold text-slate-800 truncate max-w-[100px]">{userProfile?.full_name || user.email?.split('@')[0]}</p>
-                <p className="text-[10px] text-slate-400 font-semibold uppercase">Admin</p>
-              </div>
-              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-4 h-4 text-[#8f959e] ${isProfileOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {isProfileOpen && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setIsProfileOpen(false)}></div>
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-20 animate-in fade-in zoom-in-95 duration-200">
-                  <div className="px-4 py-3 border-b border-slate-50 mb-1">
-                    <p className="text-xs text-slate-400 font-medium">Đăng nhập với</p>
-                    <p className="text-sm font-bold text-slate-700 truncate">{user.email}</p>
+                <div className="absolute right-0 mt-1 w-56 bg-white rounded shadow-lg border border-[#dee0e3] py-1 z-20">
+                  <div className="px-4 py-2 border-b border-[#eff0f1] mb-1">
+                    <p className="text-xs text-[#8f959e]">Đăng nhập với</p>
+                    <p className="text-sm font-medium text-[#1f2329] truncate">{user.email}</p>
                   </div>
                   <button
                     onClick={() => { setActiveTab('ACCOUNT'); setIsProfileOpen(false); }}
-                    className="w-full px-4 py-2.5 text-left text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 flex items-center gap-3 transition-all"
+                    className="w-full px-4 py-2 text-left text-sm text-[#1f2329] hover:bg-[#eff0f1] flex items-center gap-3"
                   >
                     <UserCircle className="w-4 h-4" />
                     Hồ sơ cá nhân
                   </button>
                   <button
                     onClick={() => { setActiveTab('SYSTEM'); setIsProfileOpen(false); }}
-                    className="w-full px-4 py-2.5 text-left text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 flex items-center gap-3 transition-all"
+                    className="w-full px-4 py-2 text-left text-sm text-[#1f2329] hover:bg-[#eff0f1] flex items-center gap-3"
                   >
                     <Settings className="w-4 h-4" />
                     Cài đặt hệ thống
                   </button>
-                  <div className="h-[1px] bg-slate-50 my-1"></div>
+                  <div className="h-[1px] bg-[#eff0f1] my-1"></div>
                   <button
                     onClick={signOut}
-                    className="w-full px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-all font-medium"
+                    className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 font-medium"
                   >
                     <LogOut className="w-4 h-4" />
                     Đăng xuất
@@ -283,62 +271,46 @@ function SimManager() {
       </header>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* --- Sidebar Navigation --- */}
-        <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 md:relative md:w-64 md:h-full md:border-r md:border-t-0 z-40 overflow-y-auto">
-          <div className="flex md:flex-col h-full py-2 md:py-6 md:px-4">
-            <div className="flex-1 flex md:flex-col justify-around md:justify-start md:gap-1.5">
+        {/* --- Sidebar Navigation (Lark Style) --- */}
+        <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#dee0e3] md:relative md:w-20 lg:w-56 md:h-full md:border-r md:border-t-0 z-40 overflow-y-auto">
+          <div className="flex md:flex-col h-full py-2 lg:px-2">
+            <div className="flex-1 flex md:flex-col justify-around md:justify-start gap-1">
               {[
-                { id: 'DASHBOARD', icon: LayoutDashboard, label: 'Tổng quan', color: 'text-blue-600', bg: 'bg-blue-50' },
-                { id: 'REPORTS', icon: BarChart3, label: 'Báo cáo', color: 'text-rose-600', bg: 'bg-rose-50' },
-                { id: 'CUSTOMERS', icon: Users, label: 'Khách Hàng', color: 'text-violet-600', bg: 'bg-violet-50' },
-                { id: 'SALES', icon: ShoppingCart, label: 'Bán Hàng', color: 'text-indigo-600', bg: 'bg-indigo-50' },
-                { id: 'CASHFLOW', icon: Wallet, label: 'Sổ Quỹ', color: 'text-emerald-600', bg: 'bg-emerald-50' },
-                { id: 'INVENTORY', icon: Package, label: 'Kho Sim', color: 'text-amber-600', bg: 'bg-amber-50' },
-                { id: 'PRODUCTS', icon: Tags, label: 'Danh mục', color: 'text-slate-600', bg: 'bg-slate-100' },
-                { id: 'SYSTEM', icon: Settings, label: 'Hệ thống', color: 'text-slate-600', bg: 'bg-slate-100' }
+                { id: 'DASHBOARD', icon: LayoutDashboard, label: 'Tổng quan' },
+                { id: 'REPORTS', icon: BarChart3, label: 'Báo cáo' },
+                { id: 'CUSTOMERS', icon: Users, label: 'Khách Hàng' },
+                { id: 'SALES', icon: ShoppingCart, label: 'Bán Hàng' },
+                { id: 'CASHFLOW', icon: Wallet, label: 'Sổ Quỹ' },
+                { id: 'INVENTORY', icon: Package, label: 'Kho Sim' },
+                { id: 'PRODUCTS', icon: Tags, label: 'Danh mục' },
+                { id: 'SYSTEM', icon: Settings, label: 'Hệ thống' }
               ].map((item: any) => (
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`flex flex-col md:flex-row items-center md:gap-3 p-3 md:px-4 md:py-3 rounded-2xl transition-all duration-200 group ${activeTab === item.id ? `${item.bg} ${item.color} shadow-sm shadow-blue-100` : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'}`}
+                  className={`flex flex-col md:flex-row items-center gap-2 p-2 rounded transition-none group ${activeTab === item.id ? 'bg-[#3370ff1a] text-[#3370ff]' : 'text-[#646a73] hover:bg-[#eff0f1] hover:text-[#1f2329]'}`}
                 >
-                  <item.icon className={`w-6 h-6 md:w-5 md:h-5 transition-transform duration-200 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-110'}`} />
-                  <span className={`text-[10px] md:text-sm font-bold mt-1 md:mt-0 ${activeTab === item.id ? '' : 'text-slate-500'}`}>{item.label}</span>
-                  {activeTab === item.id && <div className="hidden md:block ml-auto w-1.5 h-1.5 rounded-full bg-current"></div>}
+                  <item.icon className="w-5 h-5 flex-shrink-0" />
+                  <span className="text-[10px] lg:text-sm font-medium lg:block hidden">{item.label}</span>
                 </button>
               ))}
-            </div>
-
-            <div className="hidden md:block mt-auto pt-6 border-t border-slate-100">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-4 text-white shadow-lg shadow-blue-100 overflow-hidden relative">
-                <div className="absolute -right-4 -bottom-4 w-20 h-20 bg-white/10 rounded-full blur-2xl"></div>
-                <p className="text-xs font-bold opacity-80 mb-1">Cần hỗ trợ?</p>
-                <p className="text-[10px] leading-relaxed opacity-90 mb-3">Liên hệ đội ngũ kỹ thuật để được giải đáp thắc mắc 24/7.</p>
-                <button className="w-full py-2 bg-white/20 hover:bg-white/30 rounded-xl text-[10px] font-bold transition-all border border-white/20">
-                  Trung tâm trợ giúp
-                </button>
-              </div>
             </div>
           </div>
         </nav>
 
         {/* --- Main Content Area --- */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-10 pb-24 md:pb-10 relative">
+        <main className="flex-1 overflow-y-auto p-4 lg:p-6 pb-24 md:pb-6 relative">
           {dataLoading && activeTab !== 'ACCOUNT' && (
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 px-4 py-2 bg-white rounded-full shadow-xl border border-blue-50 flex items-center gap-3 animate-in slide-in-from-top-4 duration-300">
-              <div className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></div>
-              <span className="text-xs font-bold text-slate-700">Đang đồng bộ dữ liệu server...</span>
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 px-3 py-1 bg-white rounded border border-[#dee0e3] flex items-center gap-2 shadow-sm">
+              <div className="w-2 h-2 rounded-full bg-[#3370ff]"></div>
+              <span className="text-xs font-medium text-[#646a73]">Đang đồng bộ...</span>
             </div>
           )}
 
-          <div className="max-w-7xl mx-auto space-y-8">
-            {/* Page Header (Dynamic based on tab) */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+          <div className="max-w-full space-y-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-[#dee0e3] pb-4 mb-4">
               <div>
-                <p className="text-[10px] font-bold text-blue-600 uppercase tracking-[0.2em] mb-1">
-                  {activeTab === 'DASHBOARD' ? 'Phân tích' : 'Quản lý'}
-                </p>
-                <h2 className="text-2xl md:text-3xl font-black text-slate-800 tracking-tight">
+                <h2 className="text-xl font-semibold text-[#1f2329]">
                   {activeTab === 'DASHBOARD' && 'Bảng điều khiển'}
                   {activeTab === 'REPORTS' && 'Báo cáo chi tiết'}
                   {activeTab === 'CUSTOMERS' && 'Danh sách khách hàng'}
@@ -352,7 +324,7 @@ function SimManager() {
               </div>
             </div>
 
-            <div className="fade-in">
+            <div className="">
               {activeTab === 'DASHBOARD' && <Dashboard packages={dashboardPackages} orders={orderStats} transactions={transactions} customers={customerStats} />}
               {activeTab === 'REPORTS' && <Reports transactions={transactions} orders={orderStats} onUpdateDueDate={updateOrderDueDate} />}
               {activeTab === 'CUSTOMERS' && <CustomerCRM customers={customerStats} onAdd={addCustomer} onUpdate={updateCustomer} onDelete={deleteCustomer} />}
@@ -361,7 +333,7 @@ function SimManager() {
               {activeTab === 'SALES' && <SalesList orders={orders} inventoryStats={inventoryStats} customers={customers} getOrderStats={getOrderStats} onAdd={addOrder} onAddTransaction={addTransaction} onDelete={deleteOrder} onUpdateDueDate={updateOrderDueDate} />}
               {activeTab === 'CASHFLOW' && <CashFlow transactions={transactions} orders={orderStats} packages={packages} onAdd={addTransaction} onDelete={deleteTransaction} />}
               {activeTab === 'SYSTEM' && (
-                <div className="space-y-8">
+                <div className="space-y-4">
                   <DataManager fullData={fullData} onImport={importFullData} />
                 </div>
               )}
