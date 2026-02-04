@@ -28,6 +28,10 @@ app.use('/api/orders', ordersRoutes);
 app.use('/api/transactions', transactionsRoutes);
 app.use('/api/import', importRoutes);
 
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', message: 'Sim Manager API is healthy', timestamp: new Date() });
+});
+
 app.get('/', (req, res) => {
     res.send('Sim Manager Backend is running');
 });
