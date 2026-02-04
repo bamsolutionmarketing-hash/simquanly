@@ -1,6 +1,6 @@
 import { supabase } from './supabase';
 
-const API_Base = 'http://localhost:5000/api';
+const API_Base = '/api';
 
 /**
  * --- Case Conversion Helpers ---
