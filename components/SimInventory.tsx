@@ -51,32 +51,37 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-        <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-          <Box className="w-5 h-5 text-blue-600" />
-          Kho Sim (Tổng hợp)
-        </h2>
+      {/* Header (PetControl Style) */}
+      <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-[#e1e4e8] shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-[#e8f2ff] rounded-lg flex items-center justify-center">
+            <Box className="w-5 h-5 text-[#0068ff]" />
+          </div>
+          <div>
+            <h2 className="text-base font-black text-[#1c2126] uppercase tracking-wider">Kho hàng (Warehouse)</h2>
+            <p className="text-[10px] text-[#646d78] uppercase font-bold">Quản lý tồn kho & giá vốn</p>
+          </div>
+        </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center gap-2 text-sm font-medium"
+          className="bg-[#0068ff] hover:bg-[#0056d6] text-white px-4 py-2 rounded-lg flex items-center gap-2 text-xs font-black shadow-sm"
         >
-          <Plus className="w-4 h-4" />
-          Nhập Lô Mới
+          <Plus className="w-4 h-4" /> NHẬP KHO MỚI
         </button>
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-xl border border-[#e1e4e8] shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
-            <thead className="bg-gray-50 text-gray-600 font-medium border-b border-gray-200">
+          <table className="w-full text-xs text-left">
+            <thead className="bg-[#f4f6f8] text-[#646d78] font-black uppercase tracking-tighter border-b border-[#e1e4e8]">
               <tr>
                 <th className="px-4 py-3 w-10"></th>
-                <th className="px-4 py-3">Tên Sản Phẩm (Loại Sim)</th>
-                <th className="px-4 py-3 text-right">Tổng Nhập</th>
-                <th className="px-4 py-3 text-right">Tổng Bán</th>
-                <th className="px-4 py-3 text-right">Tồn Hiện Tại</th>
-                <th className="px-4 py-3 text-right">Giá Vốn TB</th>
-                <th className="px-4 py-3 text-center">Trạng thái</th>
+                <th className="px-4 py-3">SẢN PHẨM / LOẠI SIM</th>
+                <th className="px-4 py-3 text-center">TỔNG NHẬP</th>
+                <th className="px-4 py-3 text-center">ĐÃ BÁN</th>
+                <th className="px-4 py-3 text-center">TỒN KHO</th>
+                <th className="px-4 py-3 text-right">GIÁ VỐN TB</th>
+                <th className="px-4 py-3 text-center">TRẠNG THÁI</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -96,19 +101,19 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
                       <td className="px-4 py-3 text-gray-400">
                         {expandedRows.includes(stat.simTypeId) ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
                       </td>
-                      <td className="px-4 py-3 font-bold text-blue-700">{stat.name}</td>
-                      <td className="px-4 py-3 text-right text-gray-700">{stat.totalImported.toLocaleString()}</td>
-                      <td className="px-4 py-3 text-right text-gray-700">{stat.totalSold.toLocaleString()}</td>
-                      <td className="px-4 py-3 text-right font-bold text-gray-900 text-base">{stat.currentStock.toLocaleString()}</td>
-                      <td className="px-4 py-3 text-right text-gray-600 italic">{formatCurrency(stat.weightedAvgCost)}</td>
+                      <td className="px-4 py-3 font-black text-[#1c2126] text-sm">{stat.name.toUpperCase()}</td>
+                      <td className="px-4 py-3 text-center text-[11px] font-bold text-[#646d78]">{stat.totalImported.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-center text-[11px] font-bold text-[#646d78]">{stat.totalSold.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-center font-black text-[#1c2126] text-sm">{stat.currentStock.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-right font-black text-[#0068ff] text-xs">{formatCurrency(stat.weightedAvgCost)}</td>
                       <td className="px-4 py-3 text-center">
                         {stat.status === 'LOW_STOCK' ? (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                            Sắp hết
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-black bg-red-50 text-red-600 uppercase tracking-widest border border-red-100">
+                            HẾT HÀNG
                           </span>
                         ) : (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            Còn hàng
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-black bg-emerald-50 text-emerald-600 uppercase tracking-widest border border-emerald-100">
+                            CÒN HÀNG
                           </span>
                         )}
                       </td>
@@ -118,21 +123,21 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
                       <tr className="bg-gray-50">
                         <td colSpan={7} className="p-0">
                           <div className="px-4 py-3 border-y border-gray-100 shadow-inner">
-                            <h4 className="text-xs font-bold text-gray-500 uppercase mb-2 flex items-center gap-1">
-                              <History size={12} /> Lịch sử nhập hàng (Lô nhập)
+                            <h4 className="text-[10px] font-black text-[#646d78] uppercase mb-3 flex items-center gap-1 tracking-widest">
+                              <History size={12} /> Lịch sử nhập hàng & Lô hàng:
                             </h4>
-                            <table className="w-full text-xs bg-white rounded border border-gray-200">
-                              <thead className="bg-gray-100 text-gray-600">
+                            <table className="w-full text-[10px] bg-white rounded-lg border border-[#e1e4e8] overflow-hidden">
+                              <thead className="bg-[#f4f6f8] text-[#646d78] font-black uppercase tracking-widest border-b border-[#e1e4e8]">
                                 <tr>
-                                  <th className="px-3 py-2 text-left">Mã Lô</th>
-                                  <th className="px-3 py-2 text-left">Ngày Nhập</th>
-                                  <th className="px-3 py-2 text-right">SL Nhập</th>
-                                  <th className="px-3 py-2 text-right">Tổng Tiền</th>
-                                  <th className="px-3 py-2 text-right">Giá Vốn Lô</th>
-                                  <th className="px-3 py-2 text-center">Xóa</th>
+                                  <th className="px-3 py-2 text-left">MÃ LÔ</th>
+                                  <th className="px-3 py-2 text-left">NGÀY NHẬP</th>
+                                  <th className="px-3 py-2 text-right">SL NHẬP</th>
+                                  <th className="px-3 py-2 text-right">TỔNG TIỀN</th>
+                                  <th className="px-3 py-2 text-right">GIÁ VỐN/SIM</th>
+                                  <th className="px-3 py-2 text-center">XÓA</th>
                                 </tr>
                               </thead>
-                              <tbody className="divide-y divide-gray-100">
+                              <tbody className="divide-y divide-[#f4f6f8]">
                                 {stat.batches.map(batch => (
                                   <tr key={batch.id} className="hover:bg-blue-50">
                                     <td className="px-3 py-2 font-mono text-gray-600 font-medium">{batch.code}</td>
@@ -168,32 +173,34 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded shadow-xl max-w-md w-full p-6">
-            <h3 className="text-lg font-bold text-gray-800 mb-4">Nhập Lô Sim Mới</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
+            <h3 className="text-sm font-black text-[#1c2126] mb-6 uppercase tracking-widest flex items-center gap-2">
+              <Box className="w-4 h-4 text-[#0068ff]" /> ĐĂNG KÝ NHẬP LÔ MỚI
+            </h3>
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Loại Sim (Sản Phẩm)</label>
+                <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">LOẠI SẢN PHẨM</label>
                 {simTypes.length > 0 ? (
                   <select
                     required
-                    className={inputClass}
+                    className="w-full px-3 py-2 bg-[#f4f6f8] border border-[#e1e4e8] rounded-lg text-sm font-bold text-[#1c2126] outline-none focus:bg-white focus:ring-1 focus:ring-[#0068ff]"
                     value={formData.simTypeId}
                     onChange={(e) => setFormData({ ...formData, simTypeId: e.target.value })}
                   >
-                    <option value="">-- Chọn Loại Sim --</option>
+                    <option value="">-- CHỌN DANH MỤC --</option>
                     {simTypes.map(t => (
-                      <option key={t.id} value={t.id}>{t.name}</option>
+                      <option key={t.id} value={t.id}>{t.name.toUpperCase()}</option>
                     ))}
                   </select>
                 ) : (
-                  <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200 border-dashed">
-                    <p className="text-sm text-gray-500 mb-2">Chưa có loại sim nào.</p>
+                  <div className="text-center p-6 bg-[#f4f6f8] rounded-xl border border-[#e1e4e8] border-dashed">
+                    <p className="text-[10px] font-bold text-[#646d78] mb-3 uppercase">Chưa có danh mục sản phẩm.</p>
                     <button
                       type="button"
                       onClick={() => { setIsModalOpen(false); onNavigateToProducts(); }}
-                      className="text-blue-600 font-medium text-sm hover:underline"
+                      className="text-[#0068ff] font-black text-[10px] uppercase tracking-widest hover:underline"
                     >
-                      + Tạo Loại Sim ngay
+                      + TẠO DANH MỤC MỚI
                     </button>
                   </div>
                 )}
@@ -201,55 +208,55 @@ const SimInventory: React.FC<Props> = ({ inventoryStats, simTypes, onAdd, onDele
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Ngày Nhập</label>
+                  <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">NGÀY NHẬP</label>
                   <input
                     type="date"
                     required
-                    className={inputClass}
+                    className="w-full px-3 py-2 bg-[#f4f6f8] border border-[#e1e4e8] rounded-lg text-sm font-bold text-[#1c2126] outline-none focus:bg-white focus:ring-1 focus:ring-[#0068ff] uppercase"
                     value={formData.importDate}
                     onChange={(e) => setFormData({ ...formData, importDate: e.target.value })}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Số Lượng</label>
+                  <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">SỐ LƯỢNG (UNIT)</label>
                   <input
                     type="text"
                     required
-                    className={inputClass}
+                    className="w-full px-3 py-2 bg-[#f4f6f8] border border-[#e1e4e8] rounded-lg text-sm font-bold text-[#1c2126] outline-none focus:bg-white focus:ring-1 focus:ring-[#0068ff]"
                     value={formatNumberWithCommas(formData.quantity)}
                     onChange={(e) => setFormData({ ...formData, quantity: parseFormattedNumber(e.target.value) })}
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Tổng Tiền Nhập (VNĐ)</label>
+                <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">TỔNG CHI PHÍ NHẬP (VNĐ)</label>
                 <input
                   type="text"
                   required
-                  className={inputClass}
+                  className="w-full px-3 py-2 bg-[#f4f6f8] border border-[#e1e4e8] rounded-lg text-sm font-bold text-[#1c2126] outline-none focus:bg-white focus:ring-1 focus:ring-[#0068ff]"
                   placeholder="50,000,000"
                   value={formatNumberWithCommas(formData.totalImportPrice)}
                   onChange={(e) => setFormData({ ...formData, totalImportPrice: parseFormattedNumber(e.target.value) })}
                 />
-                <p className="text-xs text-gray-500 mt-1">
-                  Giá vốn/sim dự kiến: {formData.quantity > 0 ? formatCurrency(formData.totalImportPrice / formData.quantity) : '0 ₫'}
+                <p className="text-[9px] font-bold text-[#646d78] mt-2 uppercase tracking-tight">
+                  GIÁ VỐN DỰ KIẾN: {formData.quantity > 0 ? <span className="text-[#0068ff] font-black">{formatCurrency(formData.totalImportPrice / formData.quantity)}</span> : '--'}
                 </p>
               </div>
 
-              <div className="flex gap-3 pt-4">
+              <div className="flex gap-2 pt-4">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 font-medium"
+                  className="flex-1 py-2 bg-[#f4f6f8] text-[#646d78] rounded-lg font-black text-[10px] uppercase tracking-widest"
                 >
-                  Hủy
+                  HỦY BỎ
                 </button>
                 <button
                   type="submit"
                   disabled={!formData.simTypeId}
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium disabled:opacity-50"
+                  className="flex-1 py-2 bg-[#0068ff] text-white rounded-lg font-black text-[10px] uppercase tracking-widest shadow-sm disabled:opacity-50"
                 >
-                  Lưu Kho
+                  XÁC NHẬN NHẬP KHO
                 </button>
               </div>
             </form>

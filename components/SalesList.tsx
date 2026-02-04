@@ -112,64 +112,96 @@ const SalesList: React.FC<Props> = ({ orders, inventoryStats, customers, getOrde
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-        <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-          <ShoppingCart className="w-5 h-5 text-indigo-600" /> Bán Hàng
-        </h2>
-        <button onClick={() => { resetForm(); setIsModalOpen(true); }} className="bg-indigo-600 text-white px-4 py-2 rounded flex items-center gap-2 text-sm font-medium shadow-sm hover:bg-indigo-700">
-          <Plus className="w-4 h-4" /> Tạo Đơn Mới
+      {/* Header (PetControl Style) */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-4 rounded-xl border border-[#e1e4e8] shadow-sm gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-[#e8f2ff] rounded-lg flex items-center justify-center">
+            <ShoppingCart className="w-5 h-5 text-[#0068ff]" />
+          </div>
+          <div>
+            <h2 className="text-base font-black text-[#1c2126] uppercase tracking-wider">Đơn hàng (Sales)</h2>
+            <p className="text-[10px] text-[#646d78] uppercase font-bold">Quản lý bán sỉ & lẻ hệ thống</p>
+          </div>
+        </div>
+
+        <div className="flex gap-2 p-1 bg-[#f4f6f8] rounded-xl">
+          <button
+            onClick={() => setActiveTab('WHOLESALE')}
+            className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg ${activeTab === 'WHOLESALE' ? 'bg-white text-[#0068ff] shadow-sm' : 'text-[#646d78] hover:text-[#1c2126]'}`}
+          >
+            Bán Sỉ (Đại lý)
+          </button>
+          <button
+            onClick={() => setActiveTab('RETAIL')}
+            className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg ${activeTab === 'RETAIL' ? 'bg-white text-[#0068ff] shadow-sm' : 'text-[#646d78] hover:text-[#1c2126]'}`}
+          >
+            Bán Lẻ
+          </button>
+        </div>
+
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="bg-[#0068ff] hover:bg-[#0056d6] text-white px-4 py-2 rounded-lg flex items-center gap-2 text-xs font-black shadow-sm w-full md:w-auto justify-center"
+        >
+          <Plus className="w-4 h-4" /> TẠO ĐƠN HÀNG
         </button>
       </div>
 
-      <div className="flex gap-2 border-b border-gray-200">
-        <button onClick={() => setActiveTab('WHOLESALE')} className={`px-4 py-2 text-sm font-bold border-b-2 ${activeTab === 'WHOLESALE' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-500'}`}>Bán Sỉ (B2B)</button>
-        <button onClick={() => setActiveTab('RETAIL')} className={`px-4 py-2 text-sm font-bold border-b-2 ${activeTab === 'RETAIL' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-500'}`}>Bán Lẻ (B2C)</button>
-      </div>
-
-      <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden overflow-x-auto">
-        <table className="w-full text-sm text-left">
-          <thead className="bg-gray-50 text-gray-600 font-bold border-b border-gray-200">
+      <div className="bg-white rounded-xl border border-[#e1e4e8] shadow-sm overflow-hidden">
+        <table className="w-full text-xs text-left">
+          <thead className="bg-[#f4f6f8] text-[#646d78] font-black uppercase tracking-tighter border-b border-[#e1e4e8]">
             <tr>
-              <th className="px-4 py-3">Mã đơn</th>
-              <th className="px-4 py-3">Ngày</th>
-              <th className="px-4 py-3">Khách hàng</th>
-              <th className="px-4 py-3 text-right">Tổng tiền</th>
-              <th className="px-4 py-3 text-right">Đã thu</th>
-              <th className="px-4 py-3 text-right">Còn nợ</th>
-              <th className="px-4 py-3 text-center">Trạng thái</th>
-              <th className="px-4 py-3 text-center">Xóa</th>
+              <th className="px-4 py-3">ID</th>
+              <th className="px-4 py-3">DATE</th>
+              <th className="px-4 py-3">CLIENT INFO</th>
+              <th className="px-4 py-3 text-right">TOTAL</th>
+              <th className="px-4 py-3 text-right">COLLECTED</th>
+              <th className="px-4 py-3 text-right">REMAINING</th>
+              <th className="px-4 py-3 text-center">STATUS</th>
+              <th className="px-4 py-3 text-center">ACTIONS</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
             {filteredOrders.length === 0 ? (
               <tr>
-                <td colSpan={8} className="px-4 py-8 text-center text-gray-400 italic">Chưa có đơn hàng nào trong mục này.</td>
+                <td colSpan={7} className="px-4 py-12 text-center text-[#646d78] font-black uppercase text-[10px] tracking-widest opacity-50">
+                  CHƯA CÓ ĐƠN HÀNG NÀO ĐƯỢC GHI NHẬN.
+                </td>
               </tr>
             ) : (
               filteredOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 font-medium text-indigo-600">{order.code}</td>
-                  <td className="px-4 py-3 text-gray-600">{formatDate(order.date)}</td>
+                <tr key={order.id} className="hover:bg-[#f4f6f8] group">
                   <td className="px-4 py-3">
-                    <div className="flex flex-col">
-                      <span className="font-semibold text-gray-800">{order.customerName}</span>
-                      {order.note && <span className="text-[10px] text-gray-400 truncate max-w-[150px]">{order.note}</span>}
-                    </div>
+                    <div className="text-[10px] font-mono font-black text-[#1c2126]">{order.code}</div>
+                    <div className="text-[9px] text-[#646d78] font-bold uppercase">{formatDate(order.date)}</div>
                   </td>
-                  <td className="px-4 py-3 text-right font-bold text-gray-900">{formatCurrency(order.totalAmount)}</td>
-                  <td className="px-4 py-3 text-right text-emerald-600 font-medium">{formatCurrency(order.paidAmount)}</td>
-                  <td className="px-4 py-3 text-right text-red-600 font-bold">{order.remaining > 0 ? formatCurrency(order.remaining) : '-'}</td>
+                  <td className="px-4 py-3">
+                    <div className="text-[11px] font-black text-[#1c2126] uppercase">{order.agentName}</div>
+                    {order.saleType === 'WHOLESALE' && <div className="text-[8px] font-black text-[#0068ff] uppercase tracking-tighter">ĐẠI LÝ</div>}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="text-[11px] font-bold text-[#1c2126]">{order.simTypeName?.toUpperCase()}</div>
+                    <div className="text-[9px] text-[#646d78] font-bold">{formatCurrency(order.salePrice)} / SIM</div>
+                  </td>
+                  <td className="px-4 py-3 text-center text-[11px] font-black text-[#1c2126]">{order.quantity}</td>
+                  <td className="px-4 py-3 text-right">
+                    <div className="text-sm font-black text-[#1c2126]">{formatCurrency(order.totalAmount)}</div>
+                    {order.remaining > 0 && <div className="text-[9px] font-black text-red-600 uppercase tracking-tighter">CÒN NỢ {formatCurrency(order.remaining)}</div>}
+                  </td>
                   <td className="px-4 py-3 text-center">
-                    {order.remaining <= 0 ? (
-                      <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-[10px] font-bold">HOÀN TẤT</span>
+                    {order.isFinished ? (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-black bg-emerald-50 text-emerald-600 uppercase tracking-widest border border-emerald-100">HOÀN TẤT</span>
                     ) : (
-                      <span className={`px-2 py-1 rounded-full text-[10px] font-bold ${order.isOverdue ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-700'}`}>
-                        {order.isOverdue ? 'QUÁ HẠN' : 'GHI NỢ'}
-                      </span>
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-black bg-orange-50 text-orange-600 uppercase tracking-widest border border-orange-100">CHỜ THANH TOÁN</span>
                     )}
                   </td>
                   <td className="px-4 py-3 text-center">
-                    <button onClick={() => onDelete(order.id)} className="text-gray-300 hover:text-red-500"><Trash2 size={16} /></button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); onDelete(order.id); }}
+                      className="p-1.5 text-[#646d78] hover:text-red-600 hover:bg-red-50 rounded-lg"
+                    >
+                      <Trash2 size={14} />
+                    </button>
                   </td>
                 </tr>
               ))
@@ -179,94 +211,160 @@ const SalesList: React.FC<Props> = ({ orders, inventoryStats, customers, getOrde
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-          <div className="bg-white rounded shadow-xl max-w-md w-full p-6 my-8">
-            <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <Plus className="text-indigo-600" /> {activeTab === 'WHOLESALE' ? 'Đơn Bán Sỉ (Đại lý)' : 'Đơn Bán Lẻ (1 lần)'}
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
+            <h3 className="text-sm font-black text-[#1c2126] mb-6 uppercase tracking-widest flex items-center gap-2">
+              <ShoppingCart className="w-4 h-4 text-[#0068ff]" /> {activeTab === 'WHOLESALE' ? 'TẠO ĐƠN HÀNG ĐẠI LÝ' : 'TẠO ĐƠN BÁN LẺ'}
             </h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">NGÀY BÁN</label>
+                  <input
+                    type="date"
+                    required
+                    className="w-full px-3 py-2 bg-[#f4f6f8] border border-[#e1e4e8] rounded-lg text-sm font-bold text-[#1c2126] outline-none focus:bg-white focus:ring-1 focus:ring-[#0068ff] uppercase"
+                    value={formData.date}
+                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">LOẠI SẢN PHẨM</label>
+                  <select
+                    required
+                    className="w-full px-3 py-2 bg-[#f4f6f8] border border-[#e1e4e8] rounded-lg text-sm font-bold text-[#1c2126] outline-none focus:bg-white focus:ring-1 focus:ring-[#0068ff]"
+                    value={formData.simTypeId}
+                    onChange={(e) => setFormData({ ...formData, simTypeId: e.target.value })}
+                  >
+                    <option value="">-- CHỌN LOẠI SIM --</option>
+                    {availableProducts.map(p => (
+                      <option key={p.simTypeId} value={p.simTypeId}>
+                        {p.name.toUpperCase()} (TỒN: {p.currentStock})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
               {activeTab === 'WHOLESALE' ? (
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Khách Hàng (Đại lý)</label>
-                  <select required className={inputClass} value={formData.customerId} onChange={(e) => setFormData({ ...formData, customerId: e.target.value })}>
-                    <option value="">-- Chọn Khách Hàng --</option>
-                    {customers.filter(c => c.type === 'WHOLESALE').map(c => <option key={c.id} value={c.id}>{c.name} ({c.phone})</option>)}
+                  <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">CHỌN ĐẠI LÝ</label>
+                  <select
+                    required
+                    className="w-full px-3 py-2 bg-[#f4f6f8] border border-[#e1e4e8] rounded-lg text-sm font-bold text-[#1c2126] outline-none focus:bg-white focus:ring-1 focus:ring-[#0068ff]"
+                    value={formData.customerId}
+                    onChange={(e) => setFormData({ ...formData, customerId: e.target.value })}
+                  >
+                    <option value="">-- CHỌN KHÁCH HÀNG --</option>
+                    {customers.filter(c => c.type === 'WHOLESALE').map(c => (
+                      <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
                   </select>
                 </div>
               ) : (
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Thông tin khách (Tên & SĐT)</label>
+                  <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">THÔNG TIN KHÁCH LẺ (TÊN/SĐT)</label>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#646d78]" />
                     <input
                       type="text"
-                      placeholder="VD: Anh Tuấn - 0912345678"
-                      className={`${inputClass} pl-10`}
+                      className="w-full pl-9 pr-4 py-2 bg-[#f4f6f8] border border-[#e1e4e8] rounded-lg text-sm font-bold text-[#1c2126] outline-none focus:bg-white focus:ring-1 focus:ring-[#0068ff]"
+                      placeholder="Nguyễn Văn A - 09xx..."
                       value={formData.retailCustomerInfo}
                       onChange={(e) => setFormData({ ...formData, retailCustomerInfo: e.target.value })}
                     />
                   </div>
-                  <p className="text-[10px] text-gray-400 mt-1 italic">* Không cần lưu vào CRM, thông tin sẽ được ghi vào Sổ Quỹ.</p>
                 </div>
               )}
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Gói Sim / Sản phẩm</label>
-                <select required className={inputClass} value={formData.simTypeId} onChange={(e) => setFormData({ ...formData, simTypeId: e.target.value })}>
-                  <option value="">-- Chọn Gói Sim --</option>
-                  {availableProducts.map(p => <option key={p.simTypeId} value={p.simTypeId}>{p.name} (Tồn: {p.currentStock})</option>)}
-                </select>
-              </div>
-
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Số Lượng</label>
-                  <input type="text" required className={inputClass} value={formatNumberWithCommas(formData.quantity)} onChange={(e) => setFormData({ ...formData, quantity: parseFormattedNumber(e.target.value) })} />
+                  <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">SỐ LƯỢNG</label>
+                  <input
+                    type="number"
+                    required
+                    min="1"
+                    className="w-full px-3 py-2 bg-[#f4f6f8] border border-[#e1e4e8] rounded-lg text-sm font-bold text-[#1c2126] outline-none focus:bg-white focus:ring-1 focus:ring-[#0068ff]"
+                    value={formData.quantity}
+                    onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) || 0 })}
+                  />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Giá Bán (VNĐ)</label>
-                  <input type="text" required className={inputClass} value={formatNumberWithCommas(formData.salePrice)} onChange={(e) => setFormData({ ...formData, salePrice: parseFormattedNumber(e.target.value) })} />
+                  <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">ĐƠN GIÁ BÁN</label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-3 py-2 bg-[#f4f6f8] border border-[#e1e4e8] rounded-lg text-sm font-bold text-[#1c2126] outline-none focus:bg-white focus:ring-1 focus:ring-[#0068ff]"
+                    value={formatNumberWithCommas(formData.salePrice)}
+                    onChange={(e) => setFormData({ ...formData, salePrice: parseFormattedNumber(e.target.value) })}
+                  />
                 </div>
               </div>
 
-              <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                <div className="flex items-center justify-between mb-3">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    {isPaid ? <CheckSquare className="text-green-600" onClick={() => setIsPaid(false)} /> : <Square className="text-gray-400" onClick={() => setIsPaid(true)} />}
-                    <span className="text-sm font-bold text-gray-700">Đã Thu Tiền (Hoàn tất)</span>
-                  </label>
-                  <span className={`text-[10px] font-black px-2 py-0.5 rounded ${isPaid ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
-                    {isPaid ? 'AUTO THU' : 'GHI NỢ'}
-                  </span>
+              <div className="bg-[#f4f6f8] p-4 rounded-xl border border-[#e1e4e8]">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[10px] font-black text-[#646d78] uppercase tracking-widest">THANH TOÁN NGAY?</span>
+                  <button
+                    type="button"
+                    onClick={() => setIsPaid(!isPaid)}
+                    className="flex items-center gap-2 group"
+                  >
+                    {isPaid ? <CheckSquare className="w-5 h-5 text-[#0068ff]" /> : <Square className="w-5 h-5 text-[#646d78]" />}
+                    <span className={`text-[10px] font-black uppercase tracking-tight ${isPaid ? 'text-[#0068ff]' : 'text-[#646d78]'}`}>
+                      {isPaid ? 'DA THANH TOÁN' : 'GHI NỢ (PENDING)'}
+                    </span>
+                  </button>
                 </div>
 
-                <div>
-                  {isPaid ? (
+                {isPaid ? (
+                  <div>
+                    <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">HÌNH THỨC NHẬN TIỀN</label>
                     <div className="flex gap-2">
                       {['TRANSFER', 'CASH', 'COD'].map(m => (
-                        <button key={m} type="button" onClick={() => setPaymentMethod(m as any)} className={`flex-1 py-2 text-[10px] font-bold rounded border ${paymentMethod === m ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-gray-600 border-gray-200 hover:border-indigo-300'}`}>
-                          {m === 'TRANSFER' ? 'C.Khoản' : m === 'CASH' ? 'Tiền mặt' : 'COD'}
+                        <button
+                          key={m}
+                          type="button"
+                          onClick={() => setPaymentMethod(m as any)}
+                          className={`flex-1 py-1.5 text-[9px] font-black uppercase tracking-tighter rounded border ${paymentMethod === m ? 'bg-[#0068ff] text-white border-[#0068ff]' : 'bg-white text-[#646d78] border-[#e1e4e8]'}`}
+                        >
+                          {m === 'TRANSFER' ? 'Chuyển khoản' : m === 'CASH' ? 'Tiền mặt' : 'COD'}
                         </button>
                       ))}
                     </div>
-                  ) : (
-                    <div className="">
-                      <label className="block text-[10px] font-bold text-gray-500 uppercase mb-1">Hạn trả công nợ</label>
-                      <input type="date" required={!isPaid} className={inputClass} value={formData.dueDate} onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })} />
-                    </div>
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  <div>
+                    <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">HẠN THANH TOÁN (DEADLINE)</label>
+                    <input
+                      type="date"
+                      required
+                      className="w-full px-3 py-2 bg-white border border-red-200 rounded-lg text-sm font-bold text-red-600 outline-none focus:ring-1 focus:ring-red-500 uppercase"
+                      value={formData.dueDate}
+                      onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+                    />
+                  </div>
+                )}
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Ghi chú đơn hàng</label>
-                <textarea rows={2} className={inputClass} placeholder="Nhập ghi chú thêm..." value={formData.note} onChange={(e) => setFormData({ ...formData, note: e.target.value })} />
+                <label className="block text-[9px] font-black text-[#646d78] uppercase tracking-widest mb-1.5">GHI CHÚ ĐƠN HÀNG</label>
+                <textarea rows={2} className="w-full px-3 py-2 bg-[#f4f6f8] border border-[#e1e4e8] rounded-lg text-sm font-bold text-[#1c2126] outline-none focus:bg-white focus:ring-1 focus:ring-[#0068ff]" placeholder="Nhập ghi chú thêm..." value={formData.note} onChange={(e) => setFormData({ ...formData, note: e.target.value })} />
               </div>
 
-              <div className="flex gap-3 pt-4 border-t border-gray-100">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded font-bold hover:bg-gray-200">Hủy</button>
-                <button type="submit" className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded font-bold hover:bg-indigo-700 shadow-sm">Xác Nhận Đơn</button>
+              <div className="flex gap-2 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="flex-1 py-2 bg-[#f4f6f8] text-[#646d78] rounded-lg font-black text-[10px] uppercase tracking-widest"
+                >
+                  HỦY BỎ
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-2 bg-[#0068ff] text-white rounded-lg font-black text-[10px] uppercase tracking-widest shadow-sm"
+                >
+                  XÁC NHẬN CHỐT ĐƠN
+                </button>
               </div>
             </form>
           </div>

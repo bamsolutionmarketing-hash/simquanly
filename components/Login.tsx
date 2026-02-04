@@ -30,6 +30,7 @@ export default function Login() {
                     password,
                 });
                 if (error) throw error;
+                window.location.reload();
             }
         } catch (err: any) {
             setError(err.message === 'Invalid login credentials' ? 'Email hoặc mật khẩu không chính xác.' : err.message);
@@ -44,11 +45,11 @@ export default function Login() {
             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-100/30 rounded-full blur-3xl"></div>
             <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-100/30 rounded-full blur-3xl"></div>
 
-            <div className="max-w-md w-full relative z-10 transition-all duration-500">
-                <div className="bg-white rounded-[2rem] shadow-2xl shadow-blue-900/10 p-10 border border-white">
-                    <div className="text-center mb-10">
-                        <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-200 rotate-3">
-                            <Cpu className="text-white w-8 h-8 -rotate-3" />
+            <div className="max-w-md w-full relative z-10">
+                <div className="bg-white rounded shadow-2xl p-8 border border-[#dee0e3]">
+                    <div className="text-center mb-8">
+                        <div className="w-12 h-12 bg-blue-600 rounded flex items-center justify-center mx-auto mb-4 shadow-sm">
+                            <Cpu className="text-white w-6 h-6" />
                         </div>
                         <h2 className="text-3xl font-black text-slate-800 tracking-tight">
                             {isSignUp ? 'Tạo tài khoản' : 'Đăng nhập'}
@@ -85,7 +86,7 @@ export default function Login() {
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 outline-none transition-all font-medium text-slate-700"
+                                    className="w-full pl-12 pr-4 py-3 bg-white border border-[#dee0e3] rounded focus:ring-1 focus:ring-blue-500 outline-none font-medium text-slate-700"
                                     placeholder="name@company.com"
                                 />
                             </div>
@@ -100,7 +101,7 @@ export default function Login() {
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 outline-none transition-all font-medium text-slate-700"
+                                    className="w-full pl-12 pr-4 py-3 bg-white border border-[#dee0e3] rounded focus:ring-1 focus:ring-blue-500 outline-none font-medium text-slate-700"
                                     placeholder="••••••••"
                                 />
                             </div>
@@ -117,7 +118,7 @@ export default function Login() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-4 px-6 rounded-2xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20 active:scale-[0.98]"
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded flex items-center justify-center gap-2 shadow-sm active:scale-[0.99] disabled:opacity-50"
                         >
                             {loading ? (
                                 <Loader2 className="w-5 h-5 animate-spin" />
